@@ -3,10 +3,9 @@ package SpotifyPlaylist.user.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
     private String kakaoId;
 
@@ -28,5 +27,7 @@ public class User {
     private String nickname;
 
     private String profileImage;
+
+    private String spotifyId;
 
 }

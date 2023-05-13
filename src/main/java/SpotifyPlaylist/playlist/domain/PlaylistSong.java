@@ -13,12 +13,14 @@ public class PlaylistSong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long playlistSongId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="playlist_id")
     private Playlist playlist;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String spotifyId;
@@ -27,10 +29,10 @@ public class PlaylistSong {
 
     private String artist;
 
-    private String album;
+    private String albumImageUrl;
 
-    private int durationMs;
-
-    private String imageUrl;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playlistSong")
+    @JoinColumn(name = "sticker_id")
+    private Sticker sticker; // 스티커 이미지
 
 }

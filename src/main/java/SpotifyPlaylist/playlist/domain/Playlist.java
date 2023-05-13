@@ -13,13 +13,14 @@ public class Playlist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long playlistId;
 
     private String playlistName;
 
-    private String Description;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String spotifyPlaylistId;
