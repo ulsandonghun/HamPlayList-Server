@@ -23,10 +23,17 @@ public class SpotifyController {
     SpotifyService spotifyService =new SpotifyService();
 
     @GetMapping("/search/{trackname}")
-    public List<SearchResponseDto> searchTracksByArtist(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
+    public List<SearchResponseDto> searchTracksByTrackname(@PathVariable String trackname) throws IOException, ParseException, SpotifyWebApiException {
 
 
-        return spotifyService.search(trackname);
+        return spotifyService.SearchByTrackname(trackname);
+    }
+
+    @GetMapping("/search/{artist}/{trackname}")
+    public List<SearchResponseDto> searchTracksByTracknameAndArtist(@PathVariable String trackname,@PathVariable String artist) throws IOException, ParseException, SpotifyWebApiException {
+
+
+        return spotifyService.SearchByTracknameAndArtist(trackname,artist);
     }
 
 }
