@@ -26,16 +26,16 @@ import java.util.Random;
 import org.springframework.web.util.UriUtils;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/spotify")
 public class SpotifyAuthController {
 
-    @Value("f44ba55629874250bddde56310980a50")
+    @Value("${spotify.registration.client-id}")
     private String clientId;
 
-    @Value("c7446a870f4b4e399078cc75eb30b5fd")
+    @Value("${spotify.registration.client-secret}")
     private String clientSecret;
 
-    @Value("http://localhost:8080/callback")
+    @Value("${spotify.registration.redirect-uri}")
     private String redirectUri;
 
     private final Random random = new Random();
@@ -167,6 +167,21 @@ public class SpotifyAuthController {
                 "=" +
                 UriUtils.encodeQueryParam(value, StandardCharsets.UTF_8);
     }
+
+    @GetMapping("/me")
+    public Mono<ResponseEntity<String>> getMe() {
+        if (accessToken.get() == null) {
+            return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
+        }
+
+        String meUrl = "https://api.spotify.com/v1/me";
+        return webClient.get()
+                .uri(meUrl)
+                .header("Authorization", "Bearer " + accessToken.get())
+                .retrieve()
+                .toEntity(String.class);
+    }
+
 }
 class TokenResponse {
     private String access_token;

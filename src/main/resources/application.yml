@@ -22,11 +22,6 @@
 #              sql:
 #                BasicBinder: TRACE
 
-spotify:
-  client-id: 432c5a0bcd714e4bad47e701f88d2edb
-  client-secret: 4b9bfa15f9404f2296b8b2641191f5c6
-  base-url: https://api.spotify.com/v1/
-
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/toktok?serverTimezone=UTC
@@ -43,3 +38,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+
+spotify:
+  registration:
+    #    client-id: 432c5a0bcd714e4bad47e701f88d2edb
+    client-id: 9aa067b28e444056ab123c76058ca7ab
+    #    client-secret: 4b9bfa15f9404f2296b8b2641191f5c6
+    client-secret: 28da9a874ab248ecae461398a4a20d53
+    redirect-uri: http://localhost:8080/spotify/callback
+    scope: user-read-private,user-read-email
+  provider:
+    authorization-uri: https://accounts.spotify.com/authorize
+    token-uri: https://accounts.spotify.com/api/token
+    user-info-uri: https://api.spotify.com/v1/me
