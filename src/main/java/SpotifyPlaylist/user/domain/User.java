@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    private String kakaoId;
+    private String kakaoRefreshToken;
 
     private String oneLineIntroduction;
 
@@ -28,6 +28,6 @@ public class User {
 
     private String profileImage;
 
-    private String spotifyId;
+    private String spotifyRefreshToken;
 
 }

@@ -168,20 +168,6 @@ public class SpotifyAuthController {
                 UriUtils.encodeQueryParam(value, StandardCharsets.UTF_8);
     }
 
-    @GetMapping("/me")
-    public Mono<ResponseEntity<String>> getMe() {
-        if (accessToken.get() == null) {
-            return Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
-        }
-
-        String meUrl = "https://api.spotify.com/v1/me";
-        return webClient.get()
-                .uri(meUrl)
-                .header("Authorization", "Bearer " + accessToken.get())
-                .retrieve()
-                .toEntity(String.class);
-    }
-
 }
 class TokenResponse {
     private String access_token;
