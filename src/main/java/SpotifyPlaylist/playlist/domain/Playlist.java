@@ -15,9 +15,8 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playlistId;
 
-    private String playlistName;
+    private String playlistName; // ex: 비오는 날 듣기 좋은 노래
 
-    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -25,4 +24,5 @@ public class Playlist {
 
     private String spotifyPlaylistId;
 
+    private String background; // 페이지(플레이리스트) 배경 테마
 }

@@ -30,4 +30,6 @@ public class User {
 
     private String spotifyRefreshToken;
 
+    private String spotifyID; // 스포티파이 아이디(계정 이메일)
+
 }
