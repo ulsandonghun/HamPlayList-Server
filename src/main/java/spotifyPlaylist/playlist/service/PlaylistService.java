@@ -131,4 +131,23 @@ public class PlaylistService {
         return playlistDto;
     }
 
+    @Transactional
+    public void deleteSongFromPlaylist(Long playlistId, Long playlistSongId) { // 플레이리스트 곡 삭제
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+        PlaylistSong playlistSong = playlistSongRepository.findById(playlistSongId)
+                .orElseThrow(() -> new IllegalArgumentException("PlaylistSong not found with id: " + playlistSongId));
+        if (!playlistSong.getPlaylist().equals(playlist)) {
+            throw new IllegalArgumentException("PlaylistSong with id: " + playlistSongId + " is not in the Playlist with id: " + playlistId);
+        }
+
+        // Delete the Sticker entity that references the PlaylistSong
+        Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong).orElse(null);
+        if (sticker != null) {
+            stickerRepository.delete(sticker);
+        }
+
+        playlistSongRepository.delete(playlistSong);
+    }
+
 }
