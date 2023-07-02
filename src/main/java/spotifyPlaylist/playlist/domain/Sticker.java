@@ -16,6 +16,8 @@ public class Sticker {
 
     private Long imgIdx; // 스티커 이미지 인덱스
 
+    private String message; // 메시지
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_song_id")
     private PlaylistSong playlistSong;
