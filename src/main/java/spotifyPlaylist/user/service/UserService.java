@@ -9,6 +9,7 @@ import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,4 +39,15 @@ public class UserService {
         user.passwordEncode(passwordEncoder);
         userRepository.save(user);
     }
+
+    @Transactional
+    public void updateDescription(Long userId, String oneLineIntroduction) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            user.get().setOneLineIntroduction(oneLineIntroduction);
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + userId);
+        }
+    }
+
 }
