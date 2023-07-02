@@ -6,12 +6,15 @@ import org.springframework.stereotype.Service;
 import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
+import spotifyPlaylist.user.dto.UserDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.repository.FollowRepository;
 import spotifyPlaylist.user.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -70,6 +73,19 @@ public class UserService {
             newFollow.setFollowing(user);
             followRepository.save(newFollow);
         }
+    }
+
+    public List<UserDto> getMyFriends(Long userId) {
+        List<Follow> follows = followRepository.findByFollowingUserId(userId);
+        return follows.stream()
+                .map(follow -> {
+                    UserDto userDto = new UserDto();
+                    userDto.setId(follow.getFollower().getUserId());
+                    userDto.setNickname(follow.getFollower().getNickname());
+                    userDto.setOneLineIntroduction(follow.getFollower().getOneLineIntroduction());
+                    return userDto;
+                })
+                .collect(Collectors.toList());
     }
 
 }

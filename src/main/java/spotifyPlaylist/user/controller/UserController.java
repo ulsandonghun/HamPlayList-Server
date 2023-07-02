@@ -2,10 +2,15 @@ package spotifyPlaylist.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.FollowerIdDto;
 import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
+import spotifyPlaylist.user.dto.UserDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.service.UserService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +38,11 @@ public class UserController {
     @PostMapping("/follow/{userId}")
     public void followOrUnfollow(@PathVariable Long userId, @RequestBody FollowerIdDto followerIdDto) {
         userService.followOrUnfollow(userId, followerIdDto.getFollowerId());
+    }
+
+    @GetMapping("/myfriends/{userId}")
+    public List<UserDto> getMyFriends(@PathVariable Long userId) {
+        return userService.getMyFriends(userId);
     }
 
 }
