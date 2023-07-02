@@ -1,16 +1,12 @@
 package spotifyPlaylist.playlist.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.playlist.domain.Playlist;
-import spotifyPlaylist.playlist.domain.PlaylistSong;
 import spotifyPlaylist.playlist.dto.AddSongRequestDto;
 import spotifyPlaylist.playlist.dto.CreatePlaylistRequestDto;
+import spotifyPlaylist.playlist.dto.PlaylistDto;
 import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
 import spotifyPlaylist.playlist.service.PlaylistService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/playlists")
@@ -42,5 +38,10 @@ public class PlaylistController {
     @GetMapping("/{userId}")
     public PlaylistResponseDto getPlaylists(@PathVariable Long userId) {
         return playlistService.getUserWithPlaylists(userId);
+    }
+
+    @GetMapping("/playlist/{playlistId}")
+    public PlaylistDto getPlaylistWithSongsAndStickers(@PathVariable Long playlistId) {
+        return playlistService.getPlaylistWithSongsAndStickers(playlistId);
     }
 }
