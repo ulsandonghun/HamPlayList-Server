@@ -3,9 +3,12 @@ package spotifyPlaylist.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import spotifyPlaylist.user.domain.Follow;
+import spotifyPlaylist.user.domain.FollowId;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.UserSignUpDto;
+import spotifyPlaylist.user.repository.FollowRepository;
 import spotifyPlaylist.user.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -18,6 +21,8 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final FollowRepository followRepository;
 
     public void signUp(UserSignUpDto userSignUpDto) throws Exception {
 
@@ -47,6 +52,24 @@ public class UserService {
             user.get().setOneLineIntroduction(oneLineIntroduction);
         } else {
             throw new IllegalArgumentException("User not found with id: " + userId);
+        }
+    }
+
+    public void followOrUnfollow(Long userId, Long followerId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        User follower = userRepository.findById(followerId)
+                .orElseThrow(() -> new IllegalArgumentException("Follower not found with id: " + followerId));
+
+        Follow follow = followRepository.findByFollowerAndFollowing(follower, user);
+
+        if (follow != null) {
+            followRepository.deleteByFollowerAndFollowing(follower, user);
+        } else {
+            Follow newFollow = new Follow();
+            newFollow.setFollower(follower);
+            newFollow.setFollowing(user);
+            followRepository.save(newFollow);
         }
     }
 
