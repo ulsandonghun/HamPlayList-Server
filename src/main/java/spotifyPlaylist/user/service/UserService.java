@@ -7,7 +7,7 @@ import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.UserDto;
-import spotifyPlaylist.user.dto.UserSettingResponseDto;
+import spotifyPlaylist.user.dto.UserSettingsDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.repository.FollowRepository;
 import spotifyPlaylist.user.repository.UserRepository;
@@ -89,13 +89,25 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserSettingResponseDto getUserSettings(Long userId){ // 설정 화면 조회
+    public UserSettingsDto getUserSettings(Long userId){ // 설정 화면 조회
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-        UserSettingResponseDto userSettingResponseDto = new UserSettingResponseDto();
+        UserSettingsDto userSettingResponseDto = new UserSettingsDto();
         userSettingResponseDto.setNickname(user.getNickname());
         userSettingResponseDto.setOneLineIntroduction(user.getOneLineIntroduction());
         return userSettingResponseDto;
     }
 
+    public UserSettingsDto updateUserSettings(Long userId, UserSettingsDto userSettingUpdateDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        user.setNickname(userSettingUpdateDto.getNickname());
+        user.setOneLineIntroduction(userSettingUpdateDto.getOneLineIntroduction());
+        userRepository.save(user);
+
+        UserSettingsDto updatedSettings = new UserSettingsDto();
+        updatedSettings.setNickname(user.getNickname());
+        updatedSettings.setOneLineIntroduction(user.getOneLineIntroduction());
+        return updatedSettings;
+    }
 }
