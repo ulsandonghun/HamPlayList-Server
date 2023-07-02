@@ -150,4 +150,11 @@ public class PlaylistService {
         playlistSongRepository.delete(playlistSong);
     }
 
+    @javax.transaction.Transactional
+    public void deletePlaylist(Long playlistId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+        playlistRepository.delete(playlist);
+    }
+
 }
