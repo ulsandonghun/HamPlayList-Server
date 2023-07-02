@@ -8,5 +8,5 @@ import lombok.Setter;
 public class AddSongRequestDto {
     private String artistName;
     private String title;
-    private String imageUrl;
+    private Long imageIdx;
 }

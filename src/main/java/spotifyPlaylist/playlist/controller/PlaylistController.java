@@ -33,7 +33,7 @@ public class PlaylistController {
         return playlistService.createPlaylist(userId, createPlaylistRequestDto.getPlaylistName());
     }
 
-    @PostMapping("/{playlistId}/songs/{userId}")
+    @PostMapping("/{playlistId}/songs/{userId}") // 페이지에 곡(스티커) 추가
     public void addSong(@PathVariable Long playlistId, @PathVariable Long userId, @RequestBody AddSongRequestDto addSongRequestDto) {
         playlistService.addSong(addSongRequestDto, playlistId, userId);
     }
