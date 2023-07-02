@@ -41,18 +41,17 @@ public class PlaylistService {
     }
 
     @Transactional
-    public Playlist createPlaylist(Long userId, String playlistName) {
-        System.out.println("createPlaylist시작 ");
+    public void createPlaylist(Long userId, CreatePlaylistRequestDto createPlaylistRequestDto) { // 페이지(플레이리스트) 생성
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
             throw new IllegalArgumentException("User not found with id: " + userId);
         }
-        System.out.println("createPlaylist테스트 " + user.get().getUserId());
 
         Playlist playlist = new Playlist();
         playlist.setUser(user.get());
-        playlist.setPlaylistName(playlistName);
-        return playlistRepository.save(playlist);
+        playlist.setPlaylistName(createPlaylistRequestDto.getPlaylistName());
+        playlist.setBackgroundIdx(createPlaylistRequestDto.getBackgroundIdx());
+        playlistRepository.save(playlist);
     }
 
     @Transactional

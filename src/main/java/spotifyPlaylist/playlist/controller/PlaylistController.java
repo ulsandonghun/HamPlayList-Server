@@ -27,10 +27,9 @@ public class PlaylistController {
         return "playlist controller test";
     }
 
-    @PostMapping("/page/{userId}")
-    public Playlist createPlaylist(@PathVariable Long userId, @RequestBody CreatePlaylistRequestDto createPlaylistRequestDto) {
-        System.out.println("/page/{userId} test 호출");
-        return playlistService.createPlaylist(userId, createPlaylistRequestDto.getPlaylistName());
+    @PostMapping("/page/{userId}") // 페이지(플레이리스트) 추가
+    public void createPlaylist(@PathVariable Long userId, @RequestBody CreatePlaylistRequestDto createPlaylistRequestDto) {
+        playlistService.createPlaylist(userId, createPlaylistRequestDto);
     }
 
     @PostMapping("/{playlistId}/songs/{userId}") // 페이지에 곡(스티커) 추가

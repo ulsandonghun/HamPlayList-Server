@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class CreatePlaylistRequestDto {
     private String playlistName;
+    private Long backgroundIdx;
 }
