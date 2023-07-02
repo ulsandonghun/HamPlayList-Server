@@ -1,15 +1,14 @@
 package spotifyPlaylist.user.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -24,4 +23,10 @@ public class UserController {
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
+
+    @PutMapping("/description/{userId}")
+    public void updateDescription(@PathVariable Long userId, @RequestBody UpdateDescriptionRequestDto updateDescriptionRequestDto) {
+        userService.updateDescription(userId, updateDescriptionRequestDto.getOneLineIntroduction());
+    }
+
 }
