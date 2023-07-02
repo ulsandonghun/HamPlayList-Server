@@ -1,5 +1,6 @@
 package spotifyPlaylist.playlist.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.playlist.domain.Playlist;
 import spotifyPlaylist.playlist.dto.AddSongRequestDto;
@@ -44,4 +45,11 @@ public class PlaylistController {
     public PlaylistDto getPlaylistWithSongsAndStickers(@PathVariable Long playlistId) {
         return playlistService.getPlaylistWithSongsAndStickers(playlistId);
     }
+
+    @DeleteMapping("/{playlistId}/{playlistSongId}")
+    public ResponseEntity<Void> deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long playlistSongId) {
+        playlistService.deleteSongFromPlaylist(playlistId, playlistSongId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
