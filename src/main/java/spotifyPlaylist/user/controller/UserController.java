@@ -2,6 +2,7 @@ package spotifyPlaylist.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import spotifyPlaylist.user.dto.FollowerIdDto;
 import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.service.UserService;
@@ -27,6 +28,11 @@ public class UserController {
     @PutMapping("/description/{userId}")
     public void updateDescription(@PathVariable Long userId, @RequestBody UpdateDescriptionRequestDto updateDescriptionRequestDto) {
         userService.updateDescription(userId, updateDescriptionRequestDto.getOneLineIntroduction());
+    }
+
+    @PostMapping("/follow/{userId}")
+    public void followOrUnfollow(@PathVariable Long userId, @RequestBody FollowerIdDto followerIdDto) {
+        userService.followOrUnfollow(userId, followerIdDto.getFollowerId());
     }
 
 }
