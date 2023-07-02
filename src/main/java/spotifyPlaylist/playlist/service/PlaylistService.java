@@ -1,14 +1,11 @@
 package spotifyPlaylist.playlist.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spotifyPlaylist.playlist.domain.Playlist;
 import spotifyPlaylist.playlist.domain.PlaylistSong;
 import spotifyPlaylist.playlist.domain.Sticker;
-import spotifyPlaylist.playlist.dto.AddSongRequestDto;
-import spotifyPlaylist.playlist.dto.PlaylistInfoDto;
-import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
+import spotifyPlaylist.playlist.dto.*;
 import spotifyPlaylist.playlist.repository.PlaylistRepository;
 import spotifyPlaylist.playlist.repository.PlaylistSongRepository;
 import spotifyPlaylist.playlist.repository.StickerRepository;
@@ -19,6 +16,7 @@ import spotifyPlaylist.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -103,6 +101,34 @@ public class PlaylistService {
         userPlaylistResponseDto.setNickname(user.getNickname());
         userPlaylistResponseDto.setPlaylists(playlistInfoDtos);
         return userPlaylistResponseDto;
+    }
+
+    public PlaylistDto getPlaylistWithSongsAndStickers(Long playlistId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+        List<PlaylistSong> playlistSongs = playlistSongRepository.findByPlaylist(playlist);
+
+        PlaylistDto playlistDto = new PlaylistDto();
+        playlistDto.setPlaylistId(playlist.getPlaylistId());
+        playlistDto.setPlaylistName(playlist.getPlaylistName());
+        playlistDto.setBackground(playlist.getBackground());
+
+        List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
+            PlaylistSongDto playlistSongDto = new PlaylistSongDto();
+            playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
+
+            Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong)
+                    .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSong.getPlaylistSongId()));
+            StickerDto stickerDto = new StickerDto();
+            stickerDto.setStickerId(sticker.getStickerId());
+            stickerDto.setImgUrl(sticker.getImgUrl());
+
+            playlistSongDto.setStickers(Collections.singletonList(stickerDto));
+            return playlistSongDto;
+        }).collect(Collectors.toList());
+
+        playlistDto.setPlaylistSongs(playlistSongDtos);
+        return playlistDto;
     }
 
 }
