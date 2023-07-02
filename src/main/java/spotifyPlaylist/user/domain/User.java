@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,6 +38,9 @@ public class User {
     private String spotifyRefreshToken;
 
     private String spotifyID; // 스포티파이 아이디(계정 이메일)
+
+    @OneToMany(mappedBy = "user")
+    private List<UserPlaylist> userPlaylists = new ArrayList<>();
 
     // 유저 권한 설정 메소드
     public void authorizeUser() {

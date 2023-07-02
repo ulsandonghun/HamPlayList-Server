@@ -3,8 +3,11 @@ package spotifyPlaylist.playlist.domain;
 import spotifyPlaylist.user.domain.User;
 import lombok.Getter;
 import lombok.Setter;
+import spotifyPlaylist.user.domain.UserPlaylist;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +28,7 @@ public class Playlist {
     private String spotifyPlaylistId;
 
     private Long backgroundIdx; // 페이지(플레이리스트) 배경 테마
+
+    @OneToMany(mappedBy = "playlist")
+    private List<UserPlaylist> userPlaylists = new ArrayList<>();
 }
