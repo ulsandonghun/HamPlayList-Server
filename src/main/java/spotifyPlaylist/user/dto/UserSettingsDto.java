@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserSettingResponseDto {
+public class UserSettingsDto {
     private String nickname;
     private String oneLineIntroduction;
 }
