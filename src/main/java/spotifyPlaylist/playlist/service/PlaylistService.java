@@ -56,7 +56,7 @@ public class PlaylistService {
     }
 
     @Transactional
-    public void addSong(AddSongRequestDto addSongRequestDto, Long playlistId, Long userId) {
+    public void addSong(AddSongRequestDto addSongRequestDto, Long playlistId, Long userId) { // 페이지에 곡(스티커) 추가
         List<SearchResponseDto> searchResults = spotifyService.SearchByTracknameAndArtist(addSongRequestDto.getTitle(), addSongRequestDto.getArtistName());
 
         if (!searchResults.isEmpty()) {
@@ -77,11 +77,8 @@ public class PlaylistService {
 
             Sticker sticker = new Sticker();
             sticker.setPlaylistSong(playlistSong);
-            sticker.setImgUrl(addSongRequestDto.getImageUrl());
+            sticker.setImgIdx(addSongRequestDto.getImageIdx());
             stickerRepository.save(sticker);
-
-            // Print the state of the Sticker entity
-            log.info("Sticker: " + sticker);
         }
     }
 
@@ -121,7 +118,7 @@ public class PlaylistService {
                     .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSong.getPlaylistSongId()));
             StickerDto stickerDto = new StickerDto();
             stickerDto.setStickerId(sticker.getStickerId());
-            stickerDto.setImgUrl(sticker.getImgUrl());
+            stickerDto.setImgIdx(sticker.getImgIdx());
 
             playlistSongDto.setStickers(Collections.singletonList(stickerDto));
             return playlistSongDto;

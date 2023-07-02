@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class StickerDto {
     private Long stickerId;
-    private String imgUrl;
+    private Long imgIdx;
 }

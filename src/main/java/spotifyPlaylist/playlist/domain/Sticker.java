@@ -14,7 +14,7 @@ public class Sticker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stickerId;
 
-    private String imgUrl; // 스티커 이미지 url
+    private Long imgIdx; // 스티커 이미지 인덱스
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_song_id")
