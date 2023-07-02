@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.playlist.domain.Playlist;
 import spotifyPlaylist.playlist.domain.PlaylistSong;
 import spotifyPlaylist.playlist.dto.AddSongRequestDto;
+import spotifyPlaylist.playlist.dto.CreatePlaylistRequestDto;
 import spotifyPlaylist.playlist.service.PlaylistService;
 
 @RestController
@@ -16,6 +17,18 @@ public class PlaylistController {
 
     public PlaylistController(PlaylistService playlistService) {
         this.playlistService = playlistService;
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        System.out.println("playlist controller test");
+        return "playlist controller test";
+    }
+
+    @PostMapping("/page/{userId}")
+    public Playlist createPlaylist(@PathVariable Long userId, @RequestBody CreatePlaylistRequestDto createPlaylistRequestDto) {
+        System.out.println("/page/{userId} test 호출");
+        return playlistService.createPlaylist(userId, createPlaylistRequestDto.getPlaylistName());
     }
 
     @PostMapping("/{playlistId}/songs/{userId}")
