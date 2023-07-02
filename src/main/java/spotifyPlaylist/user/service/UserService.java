@@ -7,6 +7,7 @@ import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.UserDto;
+import spotifyPlaylist.user.dto.UserSettingResponseDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
 import spotifyPlaylist.user.repository.FollowRepository;
 import spotifyPlaylist.user.repository.UserRepository;
@@ -86,6 +87,15 @@ public class UserService {
                     return userDto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public UserSettingResponseDto getUserSettings(Long userId){ // 설정 화면 조회
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        UserSettingResponseDto userSettingResponseDto = new UserSettingResponseDto();
+        userSettingResponseDto.setNickname(user.getNickname());
+        userSettingResponseDto.setOneLineIntroduction(user.getOneLineIntroduction());
+        return userSettingResponseDto;
     }
 
 }
