@@ -9,6 +9,8 @@ import spotifyPlaylist.playlist.dto.PlaylistDto;
 import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
 import spotifyPlaylist.playlist.service.PlaylistService;
 
+import javax.transaction.Transactional;
+
 @RestController
 @RequestMapping("/playlists")
 public class PlaylistController {
@@ -49,6 +51,12 @@ public class PlaylistController {
     @DeleteMapping("/{playlistId}/{playlistSongId}")
     public ResponseEntity<Void> deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long playlistSongId) {
         playlistService.deleteSongFromPlaylist(playlistId, playlistSongId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{playlistId}")
+    public ResponseEntity<Void> deletePlaylist(@PathVariable Long playlistId) {
+        playlistService.deletePlaylist(playlistId);
         return ResponseEntity.noContent().build();
     }
 
