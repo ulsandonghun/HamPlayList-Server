@@ -24,5 +24,5 @@ public class Playlist {
 
     private String spotifyPlaylistId;
 
-    private String background; // 페이지(플레이리스트) 배경 테마
+    private Long backgroundIdx; // 페이지(플레이리스트) 배경 테마
 }

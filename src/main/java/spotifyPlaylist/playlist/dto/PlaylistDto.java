@@ -10,6 +10,6 @@ import java.util.List;
 public class PlaylistDto {  // 플레이리스트 곡 조회
     private Long playlistId;
     private String playlistName;
-    private String background;
+    private Long backgroundIdx;
     private List<PlaylistSongDto> playlistSongs;
 }

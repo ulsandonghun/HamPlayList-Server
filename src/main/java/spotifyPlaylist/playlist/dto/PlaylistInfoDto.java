@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class PlaylistInfoDto {
     private String playlistName;
-    private String background;
+    private Long backgroundIdx;
 }

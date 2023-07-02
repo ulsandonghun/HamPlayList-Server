@@ -90,7 +90,7 @@ public class PlaylistService {
         List<PlaylistInfoDto> playlistInfoDtos = playlists.stream().map(playlist -> {
             PlaylistInfoDto playlistInfoDto = new PlaylistInfoDto();
             playlistInfoDto.setPlaylistName(playlist.getPlaylistName());
-            playlistInfoDto.setBackground(playlist.getBackground());
+            playlistInfoDto.setBackgroundIdx(playlist.getBackgroundIdx());
             return playlistInfoDto;
         }).collect(Collectors.toList());
 
@@ -109,7 +109,7 @@ public class PlaylistService {
         PlaylistDto playlistDto = new PlaylistDto();
         playlistDto.setPlaylistId(playlist.getPlaylistId());
         playlistDto.setPlaylistName(playlist.getPlaylistName());
-        playlistDto.setBackground(playlist.getBackground());
+        playlistDto.setBackgroundIdx(playlist.getBackgroundIdx());
 
         List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
             PlaylistSongDto playlistSongDto = new PlaylistSongDto();
