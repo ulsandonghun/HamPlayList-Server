@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spotifyPlaylist.user.domain.Follow;
-import spotifyPlaylist.user.domain.FollowId;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.UserSignUpDto;

@@ -7,6 +7,8 @@ import spotifyPlaylist.playlist.domain.Playlist;
 import spotifyPlaylist.playlist.domain.PlaylistSong;
 import spotifyPlaylist.playlist.domain.Sticker;
 import spotifyPlaylist.playlist.dto.AddSongRequestDto;
+import spotifyPlaylist.playlist.dto.PlaylistInfoDto;
+import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
 import spotifyPlaylist.playlist.repository.PlaylistRepository;
 import spotifyPlaylist.playlist.repository.PlaylistSongRepository;
 import spotifyPlaylist.playlist.repository.StickerRepository;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PlaylistService {
@@ -83,4 +86,23 @@ public class PlaylistService {
             log.info("Sticker: " + sticker);
         }
     }
+
+    public PlaylistResponseDto getUserWithPlaylists(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        List<Playlist> playlists = playlistRepository.findByUser(user);
+        List<PlaylistInfoDto> playlistInfoDtos = playlists.stream().map(playlist -> {
+            PlaylistInfoDto playlistInfoDto = new PlaylistInfoDto();
+            playlistInfoDto.setPlaylistName(playlist.getPlaylistName());
+            playlistInfoDto.setBackground(playlist.getBackground());
+            return playlistInfoDto;
+        }).collect(Collectors.toList());
+
+        PlaylistResponseDto userPlaylistResponseDto = new PlaylistResponseDto();
+        userPlaylistResponseDto.setOneLineIntroduction(user.getOneLineIntroduction());
+        userPlaylistResponseDto.setNickname(user.getNickname());
+        userPlaylistResponseDto.setPlaylists(playlistInfoDtos);
+        return userPlaylistResponseDto;
+    }
+
 }

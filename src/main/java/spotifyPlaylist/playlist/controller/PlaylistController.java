@@ -7,7 +7,10 @@ import spotifyPlaylist.playlist.domain.Playlist;
 import spotifyPlaylist.playlist.domain.PlaylistSong;
 import spotifyPlaylist.playlist.dto.AddSongRequestDto;
 import spotifyPlaylist.playlist.dto.CreatePlaylistRequestDto;
+import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
 import spotifyPlaylist.playlist.service.PlaylistService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/playlists")
@@ -34,5 +37,10 @@ public class PlaylistController {
     @PostMapping("/{playlistId}/songs/{userId}")
     public void addSong(@PathVariable Long playlistId, @PathVariable Long userId, @RequestBody AddSongRequestDto addSongRequestDto) {
         playlistService.addSong(addSongRequestDto, playlistId, userId);
+    }
+
+    @GetMapping("/{userId}")
+    public PlaylistResponseDto getPlaylists(@PathVariable Long userId) {
+        return playlistService.getUserWithPlaylists(userId);
     }
 }
