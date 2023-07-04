@@ -16,6 +16,7 @@ import spotifyPlaylist.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -161,6 +162,69 @@ public class PlaylistService {
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
         playlistRepository.delete(playlist);
+    }
+
+    public StickerDto getSticker(Long userId,Long playlistSongId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        PlaylistSong playlistSong = playlistSongRepository.findById(playlistSongId)
+                .orElseThrow(() -> new IllegalArgumentException("PlaylistSong not found with id: " + playlistSongId));
+
+        Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong)
+                .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSongId));
+
+        StickerDto stickerDto = new StickerDto();
+        stickerDto.setStickerId(sticker.getStickerId());
+        stickerDto.setImgIdx(sticker.getImgIdx());
+
+        return stickerDto;
+    }
+
+
+    public List<StickerDto> getStickers( Long playlistId) {
+        //playlistsong과 무관하게 해당 playlistId에 있는 모든 스티커를 반환하는 함수.
+        //즉, 해당 playlist의 모든 스티커를 반환.
+
+
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+
+        List<PlaylistSong> playlistSongs = playlistSongRepository.findByPlaylist(playlist);
+
+        List<StickerDto> stickerDtos = new ArrayList<>();
+        for (PlaylistSong playlistSong : playlistSongs) {
+            Optional<Sticker> stickerOptional = stickerRepository.findByPlaylistSong(playlistSong);
+            stickerOptional.ifPresent(sticker -> {
+                StickerDto stickerDto = new StickerDto();
+                stickerDto.setStickerId(sticker.getStickerId());
+                stickerDto.setImgIdx(sticker.getImgIdx());
+                stickerDtos.add(stickerDto);
+            });
+        }
+
+        return stickerDtos;
+    }
+    public StickerDto getStickerByplaylistsong(Long playlistId, Long playlistSongId) {
+        //플레이리스트의 playlistSong별 스티커를 반환하는 함수.
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+
+        PlaylistSong playlistSong = playlistSongRepository.findById(playlistSongId)
+                .orElseThrow(() -> new IllegalArgumentException("PlaylistSong not found with id: " + playlistSongId));
+
+        if (!playlistSong.getPlaylist().equals(playlist)) {
+            throw new IllegalArgumentException("PlaylistSong with id: " + playlistSongId + " is not in the Playlist with id: " + playlistId);
+        }
+
+        Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong)
+                .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSongId));
+
+        StickerDto stickerDto = new StickerDto();
+        stickerDto.setStickerId(sticker.getStickerId());
+        stickerDto.setImgIdx(sticker.getImgIdx());
+
+        return stickerDto;
     }
 
 }

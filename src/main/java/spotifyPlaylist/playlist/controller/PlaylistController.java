@@ -3,13 +3,11 @@ package spotifyPlaylist.playlist.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.playlist.domain.Playlist;
-import spotifyPlaylist.playlist.dto.AddSongRequestDto;
-import spotifyPlaylist.playlist.dto.CreatePlaylistRequestDto;
-import spotifyPlaylist.playlist.dto.PlaylistDto;
-import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
+import spotifyPlaylist.playlist.dto.*;
 import spotifyPlaylist.playlist.service.PlaylistService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/playlists")
@@ -57,6 +55,19 @@ public class PlaylistController {
     public ResponseEntity<Void> deletePlaylist(@PathVariable Long playlistId) {
         playlistService.deletePlaylist(playlistId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/sticker/{playlistId}")
+    //틀정 플레이리스트의 모든 스티커를 반환.
+    public List<StickerDto> getStickers(@PathVariable Long playlistId) {
+
+
+        return playlistService.getStickers(playlistId);
+    }
+    @GetMapping("/sticker/{playlistId}/{playlistSongId}")
+    //특정 플레이리스트의 특정 곡에대한 모든 스티커 반환
+    public StickerDto getStickersByPlaylistSong(@PathVariable Long playlistId, @PathVariable Long playlistSongId) {
+        return playlistService.getStickerByplaylistsong(playlistId, playlistSongId);
     }
 
 }
