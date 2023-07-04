@@ -3,6 +3,8 @@ package spotifyPlaylist.user.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import spotifyPlaylist.playlist.domain.PlaylistSong;
+import spotifyPlaylist.playlist.repository.PlaylistSongRepository;
 import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
@@ -27,6 +29,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final FollowRepository followRepository;
+
+    private final PlaylistSongRepository playlistSongRepository;
 
     public void signUp(UserSignUpDto userSignUpDto) throws Exception {
 
@@ -112,4 +116,17 @@ public class UserService {
         updatedSettings.setIntroduce(user.getOneLineIntroduction());
         return updatedSettings;
     }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        // Delete all PlaylistSong entities that reference the User
+        List<PlaylistSong> playlistSongs = playlistSongRepository.findByUser(user);
+        playlistSongRepository.deleteAll(playlistSongs);
+
+        userRepository.delete(user);
+    }
+
 }

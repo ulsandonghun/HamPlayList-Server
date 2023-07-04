@@ -19,7 +19,7 @@ public class PlaylistSong {
     @JoinColumn(name="playlist_id")
     private Playlist playlist;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
