@@ -257,4 +257,16 @@ public class PlaylistService {
         return stickerDto;
     }
 
+    @Transactional
+    public void updatePlaylist(Long userId, Long playlistId, UpdatePlaylistRequestDto updatePlaylistRequestDto) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+
+        // Update playlist properties
+        playlist.setPlaylistName(updatePlaylistRequestDto.getPlaylistName());
+        playlist.setBackgroundIdx((long) updatePlaylistRequestDto.getBackgroundIdx());
+
+        playlistRepository.save(playlist);
+    }
+
 }

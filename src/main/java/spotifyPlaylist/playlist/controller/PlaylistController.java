@@ -75,4 +75,13 @@ public class PlaylistController {
         playlistService.addSongbyTitle(addSongRequestDto, playlistId, userId);
     }
 
+    @PutMapping("/{userId}/{playlistId}")
+    public ResponseEntity<String> updatePlaylist(
+            @PathVariable Long userId,
+            @PathVariable Long playlistId,
+            @RequestBody UpdatePlaylistRequestDto updatePlaylistRequestDto) {
+        playlistService.updatePlaylist(userId, playlistId, updatePlaylistRequestDto);
+        return ResponseEntity.ok("플레이리스트가 정상적으로 업데이트되었습니다.");
+    }
+
 }
