@@ -154,4 +154,21 @@ public class PlaylistService {
         playlistRepository.delete(playlist);
     }
 
+    public StickerDto getSticker(Long userId,Long playlistSongId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        PlaylistSong playlistSong = playlistSongRepository.findById(playlistSongId)
+                .orElseThrow(() -> new IllegalArgumentException("PlaylistSong not found with id: " + playlistSongId));
+
+        Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong)
+                .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSongId));
+
+        StickerDto stickerDto = new StickerDto();
+        stickerDto.setStickerId(sticker.getStickerId());
+        stickerDto.setImgIdx(sticker.getImgIdx());
+
+        return stickerDto;
+    }
+
 }

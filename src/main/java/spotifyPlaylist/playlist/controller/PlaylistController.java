@@ -3,10 +3,7 @@ package spotifyPlaylist.playlist.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.playlist.domain.Playlist;
-import spotifyPlaylist.playlist.dto.AddSongRequestDto;
-import spotifyPlaylist.playlist.dto.CreatePlaylistRequestDto;
-import spotifyPlaylist.playlist.dto.PlaylistDto;
-import spotifyPlaylist.playlist.dto.PlaylistResponseDto;
+import spotifyPlaylist.playlist.dto.*;
 import spotifyPlaylist.playlist.service.PlaylistService;
 
 import javax.transaction.Transactional;
@@ -58,5 +55,10 @@ public class PlaylistController {
         playlistService.deletePlaylist(playlistId);
         return ResponseEntity.noContent().build();
     }
+
+//    @GetMapping("/sticker/{userId}")
+//    public StickerDto getStickers(@PathVariable Long userId){
+//        return playlistService.
+//    }
 
 }
