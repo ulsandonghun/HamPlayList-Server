@@ -39,7 +39,7 @@ public class User {
 
     private String spotifyID; // 스포티파이 아이디(계정 이메일)
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPlaylist> userPlaylists = new ArrayList<>();
 
     // 유저 권한 설정 메소드

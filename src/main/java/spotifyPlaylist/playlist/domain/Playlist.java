@@ -29,6 +29,6 @@ public class Playlist {
 
     private Long backgroundIdx; // 페이지(플레이리스트) 배경 테마
 
-    @OneToMany(mappedBy = "playlist")
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPlaylist> userPlaylists = new ArrayList<>();
 }

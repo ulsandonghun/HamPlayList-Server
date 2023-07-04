@@ -11,6 +11,7 @@ import spotifyPlaylist.user.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,9 +33,22 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken); // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
 
         userRepository.findByEmail(email)
-                .ifPresent(user -> {
+                .ifPresentOrElse(user -> {
                     user.updateRefreshToken(refreshToken);
                     userRepository.saveAndFlush(user);
+                    try {
+                        // 회원가입이 되어 있는 경우
+                        getRedirectStrategy().sendRedirect(request, response, "/");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }, () -> {
+                    try {
+                        // 회원가입이 안 되어 있는 경우
+                        getRedirectStrategy().sendRedirect(request, response, "/signup");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
         log.info("로그인에 성공하였습니다. 이메일 : {}", email);
         log.info("로그인에 성공하였습니다. AccessToken : {}", accessToken);

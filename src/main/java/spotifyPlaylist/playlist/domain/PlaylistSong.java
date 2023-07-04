@@ -31,7 +31,7 @@ public class PlaylistSong {
 
     private String albumImageUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playlistSong")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "playlistSong", cascade = CascadeType.ALL)
     private Sticker sticker; // 스티커 이미지
 
 }
