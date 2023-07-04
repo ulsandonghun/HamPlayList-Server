@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class UserSettingsDto {
     private String nickname;
-    private String oneLineIntroduction;
+    private String introduce;
 }

@@ -96,7 +96,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
         UserSettingsDto userSettingResponseDto = new UserSettingsDto();
         userSettingResponseDto.setNickname(user.getNickname());
-        userSettingResponseDto.setOneLineIntroduction(user.getOneLineIntroduction());
+        userSettingResponseDto.setIntroduce(user.getOneLineIntroduction());
         return userSettingResponseDto;
     }
 
@@ -104,12 +104,12 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
         user.setNickname(userSettingUpdateDto.getNickname());
-        user.setOneLineIntroduction(userSettingUpdateDto.getOneLineIntroduction());
+        user.setOneLineIntroduction(userSettingUpdateDto.getIntroduce());
         userRepository.save(user);
 
         UserSettingsDto updatedSettings = new UserSettingsDto();
         updatedSettings.setNickname(user.getNickname());
-        updatedSettings.setOneLineIntroduction(user.getOneLineIntroduction());
+        updatedSettings.setIntroduce(user.getOneLineIntroduction());
         return updatedSettings;
     }
 }
