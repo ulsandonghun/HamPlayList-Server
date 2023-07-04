@@ -107,6 +107,7 @@ public class PlaylistService {
 
         PlaylistDto playlistDto = new PlaylistDto();
         playlistDto.setUserId(playlist.getUser().getUserId());
+        playlistDto.setNickname(playlist.getUser().getNickname());
         playlistDto.setPlaylistId(playlist.getPlaylistId());
         playlistDto.setPlaylistName(playlist.getPlaylistName());
         playlistDto.setBackgroundIdx(playlist.getBackgroundIdx());
