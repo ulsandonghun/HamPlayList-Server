@@ -8,5 +8,5 @@ import lombok.Setter;
 public class UserDto {
     private Long id;
     private String nickname;
-    private String oneLineIntroduction;
+    private String introduce;
 }

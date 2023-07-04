@@ -85,7 +85,7 @@ public class UserService {
                     UserDto userDto = new UserDto();
                     userDto.setId(follow.getFollower().getUserId());
                     userDto.setNickname(follow.getFollower().getNickname());
-                    userDto.setOneLineIntroduction(follow.getFollower().getOneLineIntroduction());
+                    userDto.setIntroduce(follow.getFollower().getOneLineIntroduction());
                     return userDto;
                 })
                 .collect(Collectors.toList());
