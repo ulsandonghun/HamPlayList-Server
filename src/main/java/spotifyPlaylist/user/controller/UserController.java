@@ -30,9 +30,9 @@ public class UserController {
         return "jwtTest 요청 성공";
     }
 
-    @PutMapping("/description/{userId}")
+    @PutMapping("/description/{userId}") // 닉네임, 소개글 입력
     public void updateDescription(@PathVariable Long userId, @RequestBody UpdateDescriptionRequestDto updateDescriptionRequestDto) {
-        userService.updateDescription(userId, updateDescriptionRequestDto.getOneLineIntroduction());
+        userService.updateDescription(userId, updateDescriptionRequestDto);
     }
 
     @PostMapping("/follow/{userId}")

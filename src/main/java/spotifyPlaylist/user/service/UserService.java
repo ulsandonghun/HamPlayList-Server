@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
+import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
 import spotifyPlaylist.user.dto.UserDto;
 import spotifyPlaylist.user.dto.UserSettingsDto;
 import spotifyPlaylist.user.dto.UserSignUpDto;
@@ -49,10 +50,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updateDescription(Long userId, String oneLineIntroduction) {
+    public void updateDescription(Long userId, UpdateDescriptionRequestDto updateDescriptionRequestDto) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            user.get().setOneLineIntroduction(oneLineIntroduction);
+            user.get().setNickname(updateDescriptionRequestDto.getNickname());
+            user.get().setOneLineIntroduction(updateDescriptionRequestDto.getIntroduce());
         } else {
             throw new IllegalArgumentException("User not found with id: " + userId);
         }
