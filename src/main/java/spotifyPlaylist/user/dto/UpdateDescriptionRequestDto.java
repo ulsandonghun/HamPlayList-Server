@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateDescriptionRequestDto {
-    private String oneLineIntroduction;
+    private String nickname;
+    private String introduce;
 }
