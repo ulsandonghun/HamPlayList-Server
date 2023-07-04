@@ -70,4 +70,18 @@ public class PlaylistController {
         return playlistService.getStickerByplaylistsong(playlistId, playlistSongId);
     }
 
+    @PostMapping("/{playlistId}/title/{userId}") // 페이지에 곡(스티커) 추가
+    public void addSongbyTitle(@PathVariable Long playlistId, @PathVariable Long userId, @RequestBody AddSongRequestDto addSongRequestDto) {
+        playlistService.addSongbyTitle(addSongRequestDto, playlistId, userId);
+    }
+
+    @PutMapping("/{userId}/{playlistId}")
+    public ResponseEntity<String> updatePlaylist(
+            @PathVariable Long userId,
+            @PathVariable Long playlistId,
+            @RequestBody UpdatePlaylistRequestDto updatePlaylistRequestDto) {
+        playlistService.updatePlaylist(userId, playlistId, updatePlaylistRequestDto);
+        return ResponseEntity.ok("플레이리스트가 정상적으로 업데이트되었습니다.");
+    }
+
 }

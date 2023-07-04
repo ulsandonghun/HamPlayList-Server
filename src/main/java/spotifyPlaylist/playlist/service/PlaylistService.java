@@ -82,6 +82,36 @@ public class PlaylistService {
             stickerRepository.save(sticker);
         }
     }
+    @Transactional
+    //노래이름과 가수 함께 검색시, 가수이름이 영어로 스포티파이에 저장될 경우 검색 안됨.
+    // 만약 가수이름이 스포티파이에 영어로만 저장되는 경우에 검색이 안됨, 조금더 제약조건 없이 노래이름으로만 검색 가능
+    //노래이름은 띄어쓰기, 대소문자 영어, 한국어 무관하게 검색됨(rough) 또한 검색된 정보로 역으로
+    public void addSongbyTitle(AddSongRequestDto addSongRequestDto, Long playlistId, Long userId) { // 페이지에 곡(스티커) 추가
+        List<SearchResponseDto> searchResults = spotifyService.SearchByTrackname(addSongRequestDto.getTitle());
+
+        if (!searchResults.isEmpty()) {
+            SearchResponseDto searchResult = searchResults.get(0);
+
+            PlaylistSong playlistSong = new PlaylistSong();
+            playlistSong.setTitle(searchResult.getTitle());
+            playlistSong.setArtist(searchResult.getArtistName());
+            playlistSong.setAlbumImageUrl(searchResult.getImageUrl());
+
+            Optional<User> user = userRepository.findById(userId);
+            user.ifPresent(playlistSong::setUser);
+
+            Optional<Playlist> playlist = playlistRepository.findById(playlistId);
+            playlist.ifPresent(playlistSong::setPlaylist);
+
+            playlistSong = playlistSongRepository.save(playlistSong);
+
+            Sticker sticker = new Sticker();
+            sticker.setPlaylistSong(playlistSong);
+            sticker.setImgIdx(addSongRequestDto.getImageIdx());
+            sticker.setMessage(addSongRequestDto.getMessage());
+            stickerRepository.save(sticker);
+        }
+    }
 
     public PlaylistResponseDto getUserWithPlaylists(Long userId) {
         User user = userRepository.findById(userId)
@@ -225,6 +255,18 @@ public class PlaylistService {
         stickerDto.setImgIdx(sticker.getImgIdx());
 
         return stickerDto;
+    }
+
+    @Transactional
+    public void updatePlaylist(Long userId, Long playlistId, UpdatePlaylistRequestDto updatePlaylistRequestDto) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
+
+        // Update playlist properties
+        playlist.setPlaylistName(updatePlaylistRequestDto.getPlaylistName());
+        playlist.setBackgroundIdx((long) updatePlaylistRequestDto.getBackgroundIdx());
+
+        playlistRepository.save(playlist);
     }
 
 }
