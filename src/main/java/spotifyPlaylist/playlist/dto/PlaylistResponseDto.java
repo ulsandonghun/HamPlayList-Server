@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class PlaylistResponseDto {
-    private String oneLineIntroduction;
+    private String introduce;
     private String nickname;
     private List<PlaylistInfoDto> playlists;
 }

@@ -94,7 +94,7 @@ public class PlaylistService {
         }).collect(Collectors.toList());
 
         PlaylistResponseDto userPlaylistResponseDto = new PlaylistResponseDto();
-        userPlaylistResponseDto.setOneLineIntroduction(user.getOneLineIntroduction());
+        userPlaylistResponseDto.setIntroduce(user.getOneLineIntroduction());
         userPlaylistResponseDto.setNickname(user.getNickname());
         userPlaylistResponseDto.setPlaylists(playlistInfoDtos);
         return userPlaylistResponseDto;
