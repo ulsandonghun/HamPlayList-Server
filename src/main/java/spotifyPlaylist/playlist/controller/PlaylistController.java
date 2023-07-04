@@ -70,4 +70,9 @@ public class PlaylistController {
         return playlistService.getStickerByplaylistsong(playlistId, playlistSongId);
     }
 
+    @PostMapping("/{playlistId}/title/{userId}") // 페이지에 곡(스티커) 추가
+    public void addSongbyTitle(@PathVariable Long playlistId, @PathVariable Long userId, @RequestBody AddSongRequestDto addSongRequestDto) {
+        playlistService.addSongbyTitle(addSongRequestDto, playlistId, userId);
+    }
+
 }
