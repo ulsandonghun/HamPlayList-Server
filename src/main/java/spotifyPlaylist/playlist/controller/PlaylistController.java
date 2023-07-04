@@ -42,7 +42,7 @@ public class PlaylistController {
         return playlistService.getUserWithPlaylists(userId);
     }
 
-    @GetMapping("/playlist/{playlistId}")
+    @GetMapping("/playlist/{playlistId}") // 플레이리스트 곡 조회
     public PlaylistDto getPlaylistWithSongsAndStickers(@PathVariable Long playlistId) {
         return playlistService.getPlaylistWithSongsAndStickers(playlistId);
     }

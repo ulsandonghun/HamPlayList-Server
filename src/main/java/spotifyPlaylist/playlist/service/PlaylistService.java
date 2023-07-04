@@ -100,12 +100,13 @@ public class PlaylistService {
         return userPlaylistResponseDto;
     }
 
-    public PlaylistDto getPlaylistWithSongsAndStickers(Long playlistId) {
+    public PlaylistDto getPlaylistWithSongsAndStickers(Long playlistId) { // 플레이리스트 곡 조회
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
         List<PlaylistSong> playlistSongs = playlistSongRepository.findByPlaylist(playlist);
 
         PlaylistDto playlistDto = new PlaylistDto();
+        playlistDto.setUserId(playlist.getUser().getUserId());
         playlistDto.setPlaylistId(playlist.getPlaylistId());
         playlistDto.setPlaylistName(playlist.getPlaylistName());
         playlistDto.setBackgroundIdx(playlist.getBackgroundIdx());
@@ -114,15 +115,22 @@ public class PlaylistService {
             PlaylistSongDto playlistSongDto = new PlaylistSongDto();
             playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
 
-            Sticker sticker = stickerRepository.findByPlaylistSong(playlistSong)
-                    .orElseThrow(() -> new IllegalArgumentException("Sticker not found for playlist song id: " + playlistSong.getPlaylistSongId()));
             StickerDto stickerDto = new StickerDto();
-            stickerDto.setStickerId(sticker.getStickerId());
-            stickerDto.setImgIdx(sticker.getImgIdx());
+            Optional<Sticker> optionalSticker = stickerRepository.findByPlaylistSong(playlistSong);
+            if (optionalSticker.isPresent()) {
+                Sticker sticker = optionalSticker.get();
+                stickerDto.setStickerId(sticker.getStickerId());
+                stickerDto.setImgIdx(sticker.getImgIdx());
+            } else {
+                // Sticker가 없는 경우 빈 StickerDto를 사용
+                stickerDto.setStickerId(null);
+                stickerDto.setImgIdx(null);
+            }
 
             playlistSongDto.setStickers(Collections.singletonList(stickerDto));
             return playlistSongDto;
         }).collect(Collectors.toList());
+
 
         playlistDto.setPlaylistSongs(playlistSongDtos);
         return playlistDto;
