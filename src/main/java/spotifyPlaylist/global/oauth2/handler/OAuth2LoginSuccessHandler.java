@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -33,14 +32,17 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             String email = oAuth2User.getEmail();
 
+            String accessToken;
+
             // UserRepository를 사용하여 DB에서 사용자 정보 조회
             Optional<User> userOptional = userRepository.findByEmail(email);
 
-            if(userOptional.isPresent()) { // 사용자 정보가 존재하면 (회원가입이 되어 있으면)
-                loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
-                response.sendRedirect("/"); // 메인 페이지로 리다이렉트
+            if (userOptional.isPresent()) { // 사용자 정보가 존재하면 (회원가입이 되어 있으면)
+                accessToken = loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
+
+                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
             } else { // 사용자 정보가 존재하지 않으면 (회원가입이 안 되어 있으면)
-                String accessToken = jwtService.createAccessToken(email);
+                 accessToken = jwtService.createAccessToken(email);
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
                 response.sendRedirect("/signup"); // 회원가입 페이지로 리다이렉트
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
@@ -53,7 +55,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     // TODO : 소셜 로그인 시에도 무조건 토큰 생성하지 말고 JWT 인증 필터처럼 RefreshToken 유/무에 따라 다르게 처리해보기
-    private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
+
+    private String loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
         String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
@@ -61,5 +64,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+        return accessToken;
     }
 }
