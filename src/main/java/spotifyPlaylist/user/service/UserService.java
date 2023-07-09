@@ -8,10 +8,7 @@ import spotifyPlaylist.playlist.repository.PlaylistSongRepository;
 import spotifyPlaylist.user.domain.Follow;
 import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
-import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
-import spotifyPlaylist.user.dto.UserDto;
-import spotifyPlaylist.user.dto.UserSettingsDto;
-import spotifyPlaylist.user.dto.UserSignUpDto;
+import spotifyPlaylist.user.dto.*;
 import spotifyPlaylist.user.repository.FollowRepository;
 import spotifyPlaylist.user.repository.UserRepository;
 
@@ -127,6 +124,23 @@ public class UserService {
         playlistSongRepository.deleteAll(playlistSongs);
 
         userRepository.delete(user);
+    }
+
+    public SocialLoginResponseDto getUserInfo(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            SocialLoginResponseDto socialLoginResponseDto = new SocialLoginResponseDto();
+            socialLoginResponseDto.setNickname(user.getNickname());
+            socialLoginResponseDto.setIntroduce(user.getOneLineIntroduction());
+            socialLoginResponseDto.setUserId(user.getUserId());
+
+            return socialLoginResponseDto;
+        } else {
+            throw new RuntimeException("User not found");
+        }
     }
 
 }
