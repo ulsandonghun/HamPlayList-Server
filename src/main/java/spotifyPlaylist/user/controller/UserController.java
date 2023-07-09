@@ -1,12 +1,12 @@
 package spotifyPlaylist.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.user.domain.User;
-import spotifyPlaylist.user.dto.FollowerIdDto;
-import spotifyPlaylist.user.dto.UpdateDescriptionRequestDto;
-import spotifyPlaylist.user.dto.UserDto;
-import spotifyPlaylist.user.dto.UserSignUpDto;
+import spotifyPlaylist.user.dto.*;
 import spotifyPlaylist.user.service.UserService;
 
 import java.util.List;
@@ -49,5 +49,11 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
+    }
+
+    @GetMapping("/info")
+    public SocialLoginResponseDto getUserInfo(@AuthenticationPrincipal UserDetails userDetails) throws JsonProcessingException {
+        String email = userDetails.getUsername();
+        return userService.getUserInfo(email);
     }
 }
