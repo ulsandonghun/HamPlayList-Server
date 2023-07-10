@@ -59,7 +59,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 //                response.addHeader("User-Id", String.valueOf(user.getUserId()));
 
 //                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
-                response.sendRedirect("http://localhost:8080/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
+                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
             } else { // 사용자 정보가 존재하지 않으면 (회원가입이 안 되어 있으면)
                  accessToken = jwtService.createAccessToken(email);
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
