@@ -18,10 +18,10 @@ import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 @CrossOrigin(origins = "*")
 @RestController
 public class SpotifyController {
-    SpotifyApi spotifyApi = new SpotifyApi.Builder()
-            .setAccessToken(SpotifyConfig.accessToken())
-            //accessToken()은 SpotifyConfig 에서 발급함
-            .build();
+//    SpotifyApi spotifyApi = new SpotifyApi.Builder()
+//            .setAccessToken(SpotifyConfig.accessToken())
+//            //accessToken()은 SpotifyConfig 에서 발급함
+//            .build();
 
     @Autowired
     SpotifyService spotifyService =new SpotifyService();

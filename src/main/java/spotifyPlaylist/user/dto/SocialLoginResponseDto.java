@@ -9,4 +9,8 @@ public class SocialLoginResponseDto {
     private String nickname;
     private String introduce;
     private Long userId;
+
 }
+
+}
+

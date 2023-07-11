@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.*;
+
 import spotifyPlaylist.user.repository.UserRepository;
+
 import spotifyPlaylist.user.service.UserService;
 
 import java.util.List;
