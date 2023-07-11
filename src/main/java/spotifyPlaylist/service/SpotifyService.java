@@ -18,12 +18,16 @@ import se.michaelthelin.spotify.requests.data.search.simplified.SearchTracksRequ
 
 @Service
 public class SpotifyService {
-    SpotifyApi spotifyApi = new SpotifyApi.Builder()
-            .setAccessToken(SpotifyConfig.accessToken())
-            //accessToken()은 SpotifyConfig 에서 발급함
-            .build();
+//    SpotifyApi spotifyApi = new SpotifyApi.Builder()
+//            .setAccessToken(SpotifyConfig.accessToken())
+//            //accessToken()은 SpotifyConfig 에서 발급함
+//            .build();
 
     public List<SearchResponseDto> SearchByTrackname(String trackname) {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
         List <SearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
         try {
@@ -58,6 +62,10 @@ public class SpotifyService {
 
 
     public List<SearchResponseDto> SearchByTracknameAndArtist(String trackname, String Artist) {
+        SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setAccessToken(SpotifyConfig.getAccessToken())
+                .build();
+
         List <SearchResponseDto> searchResponseDtoList = new ArrayList<>();
 
         try {
