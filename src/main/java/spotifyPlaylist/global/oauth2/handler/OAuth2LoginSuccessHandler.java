@@ -39,30 +39,10 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             Optional<User> userOptional = userRepository.findByEmail(email);
 
             if (userOptional.isPresent()) { // 사용자 정보가 존재하면 (회원가입이 되어 있으면)
-//                User user = userOptional.get();
+
                 accessToken = loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
 
 
-//                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
-                response.sendRedirect("http://localhost:8080/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
-
-//                SocialLoginResponseDto socialLoginResponseDto = new SocialLoginResponseDto();
-//                socialLoginResponseDto.setNickname(user.getNickname());
-//                socialLoginResponseDto.setIntroduce(user.getOneLineIntroduction());
-//                socialLoginResponseDto.setUserId(user.getUserId());
-//
-//                String socialLoginResponseDtoJson = objectMapper.writeValueAsString(socialLoginResponseDto); // JSON으로 변환
-//
-//                response.setContentType("application/json");
-//                response.setCharacterEncoding("utf-8");
-//                response.getWriter().write(socialLoginResponseDtoJson); // JSON으로 변환한 사용자 정보를 응답
-//
-//                // 유저 정보를 응답 헤더에 추가
-//                response.addHeader("User-Nickname", user.getNickname());
-//                response.addHeader("User-Introduce", user.getOneLineIntroduction());
-//                response.addHeader("User-Id", String.valueOf(user.getUserId()));
-
-//                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
                 response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
 
             } else { // 사용자 정보가 존재하지 않으면 (회원가입이 안 되어 있으면)
