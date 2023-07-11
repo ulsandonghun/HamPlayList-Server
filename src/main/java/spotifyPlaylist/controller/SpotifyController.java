@@ -1,5 +1,6 @@
 package spotifyPlaylist.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import spotifyPlaylist.dto.SearchResponseDto;
 import spotifyPlaylist.service.SpotifyService;
 import spotifyPlaylist.SpotifyConfig;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 public class SpotifyController {
     SpotifyApi spotifyApi = new SpotifyApi.Builder()

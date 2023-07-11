@@ -9,6 +9,7 @@ import spotifyPlaylist.playlist.service.PlaylistService;
 import javax.transaction.Transactional;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/playlists")
 public class PlaylistController {
