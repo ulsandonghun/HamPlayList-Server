@@ -7,16 +7,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.dto.*;
+
+import spotifyPlaylist.user.repository.UserRepository;
+
 import spotifyPlaylist.user.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserRepository userRepository;
     private final UserService userService;
 
     @PostMapping("/sign-up")
@@ -56,4 +62,5 @@ public class UserController {
         String email = userDetails.getUsername();
         return userService.getUserInfo(email);
     }
+
 }

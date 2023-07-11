@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import spotifyPlaylist.user.dto.UserSettingsDto;
 import spotifyPlaylist.user.service.UserService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/settings")
 @RequiredArgsConstructor

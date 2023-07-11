@@ -1,5 +1,6 @@
 package spotifyPlaylist.global.oauth2.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -7,7 +8,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import spotifyPlaylist.global.jwt.service.JwtService;
 import spotifyPlaylist.global.oauth2.CustomOAuth2User;
-import spotifyPlaylist.user.domain.Role;
 import spotifyPlaylist.user.domain.User;
 import spotifyPlaylist.user.repository.UserRepository;
 
@@ -24,6 +24,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;  // Jackson's ObjectMapper to convert Java object to JSON
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -38,10 +39,32 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             Optional<User> userOptional = userRepository.findByEmail(email);
 
             if (userOptional.isPresent()) { // 사용자 정보가 존재하면 (회원가입이 되어 있으면)
+//                User user = userOptional.get();
                 accessToken = loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
+
 
 //                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
                 response.sendRedirect("http://localhost:8080/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
+
+//                SocialLoginResponseDto socialLoginResponseDto = new SocialLoginResponseDto();
+//                socialLoginResponseDto.setNickname(user.getNickname());
+//                socialLoginResponseDto.setIntroduce(user.getOneLineIntroduction());
+//                socialLoginResponseDto.setUserId(user.getUserId());
+//
+//                String socialLoginResponseDtoJson = objectMapper.writeValueAsString(socialLoginResponseDto); // JSON으로 변환
+//
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("utf-8");
+//                response.getWriter().write(socialLoginResponseDtoJson); // JSON으로 변환한 사용자 정보를 응답
+//
+//                // 유저 정보를 응답 헤더에 추가
+//                response.addHeader("User-Nickname", user.getNickname());
+//                response.addHeader("User-Introduce", user.getOneLineIntroduction());
+//                response.addHeader("User-Id", String.valueOf(user.getUserId()));
+
+//                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
+                response.sendRedirect("http://localhost:3000/oauth2/redirect/?Token=" + accessToken); // 메인 페이지로 리다이렉트
+
             } else { // 사용자 정보가 존재하지 않으면 (회원가입이 안 되어 있으면)
                  accessToken = jwtService.createAccessToken(email);
                 response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
