@@ -21,8 +21,8 @@ public class Playlist {
     private String playlistName; // ex: 비오는 날 듣기 좋은 노래
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     private String spotifyPlaylistId;
