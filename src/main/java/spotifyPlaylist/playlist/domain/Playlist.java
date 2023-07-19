@@ -22,6 +22,8 @@ public class Playlist {
 
     private String type; // 플레이리스트: playlist  나의 기록: record
 
+    private int imageIdx; // 페이지별 붙는 이미지 인덱스
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
