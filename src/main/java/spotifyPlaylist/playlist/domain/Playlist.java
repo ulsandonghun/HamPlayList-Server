@@ -20,6 +20,7 @@ public class Playlist {
 
     private String playlistName; // ex: 비오는 날 듣기 좋은 노래
 
+    private String type; // 플레이리스트: playlist  나의 기록: record
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)
