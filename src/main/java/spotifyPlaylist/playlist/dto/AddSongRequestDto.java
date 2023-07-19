@@ -10,4 +10,5 @@ public class AddSongRequestDto {
     private String title;
     private Long imageIdx;
     private String message;
+    private String imageUrl;
 }

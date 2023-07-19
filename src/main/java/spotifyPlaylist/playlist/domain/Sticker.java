@@ -18,6 +18,8 @@ public class Sticker {
 
     private String message; // 메시지
 
+    private String imageUrl;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "playlist_song_id")
     private PlaylistSong playlistSong;

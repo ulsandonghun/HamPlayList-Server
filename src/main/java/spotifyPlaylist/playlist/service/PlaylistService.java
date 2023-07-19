@@ -80,6 +80,7 @@ public class PlaylistService {
             sticker.setPlaylistSong(playlistSong);
             sticker.setImgIdx(addSongRequestDto.getImageIdx());
             sticker.setMessage(addSongRequestDto.getMessage());
+            sticker.setImageUrl(addSongRequestDto.getImageUrl());
             stickerRepository.save(sticker);
         }
     }
