@@ -8,4 +8,5 @@ import lombok.Setter;
 public class StickerDto {
     private Long stickerId;
     private Long imgIdx;
+    private String message;
 }

@@ -8,6 +8,9 @@ import java.util.List;
 @Getter
 @Setter
 public class PlaylistSongDto {
-    private Long playlistSongId;
     private List<StickerDto> stickers;
+    private Long playlistSongId;
+    private String title;
+    private String artist;
+    private String albumImageUrl;
 }
