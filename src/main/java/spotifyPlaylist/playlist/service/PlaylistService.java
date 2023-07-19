@@ -153,6 +153,9 @@ public class PlaylistService {
         List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
             PlaylistSongDto playlistSongDto = new PlaylistSongDto();
             playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
+            playlistSongDto.setTitle(playlistSong.getTitle());
+            playlistSongDto.setArtist(playlistSong.getArtist());
+            playlistSongDto.setAlbumImageUrl(playlistSong.getAlbumImageUrl());
 
             StickerDto stickerDto = new StickerDto();
             Optional<Sticker> optionalSticker = stickerRepository.findByPlaylistSong(playlistSong);
@@ -160,10 +163,12 @@ public class PlaylistService {
                 Sticker sticker = optionalSticker.get();
                 stickerDto.setStickerId(sticker.getStickerId());
                 stickerDto.setImgIdx(sticker.getImgIdx());
+                stickerDto.setMessage(sticker.getMessage());
             } else {
                 // Sticker가 없는 경우 빈 StickerDto를 사용
                 stickerDto.setStickerId(null);
                 stickerDto.setImgIdx(null);
+                stickerDto.setMessage(null);
             }
 
             playlistSongDto.setStickers(Collections.singletonList(stickerDto));
