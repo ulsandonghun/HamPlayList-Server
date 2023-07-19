@@ -123,6 +123,10 @@ public class PlaylistService {
             PlaylistInfoDto playlistInfoDto = new PlaylistInfoDto();
             playlistInfoDto.setPlaylistName(playlist.getPlaylistName());
             playlistInfoDto.setBackgroundIdx(playlist.getBackgroundIdx());
+            playlistInfoDto.setUserIdx(playlist.getUser().getUserId());
+            playlistInfoDto.setImageIdx(playlist.getImageIdx());
+            playlistInfoDto.setType(playlist.getType());
+            playlistInfoDto.setPlaylistIdx(playlist.getPlaylistId());
             return playlistInfoDto;
         }).collect(Collectors.toList());
 

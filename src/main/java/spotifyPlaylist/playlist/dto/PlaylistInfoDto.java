@@ -8,4 +8,8 @@ import lombok.Setter;
 public class PlaylistInfoDto {
     private String playlistName;
     private Long backgroundIdx;
+    private Long userIdx;
+    private int imageIdx;
+    private String type;
+    private Long playlistIdx;
 }
