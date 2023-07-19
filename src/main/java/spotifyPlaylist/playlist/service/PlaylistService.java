@@ -52,6 +52,7 @@ public class PlaylistService {
         playlist.setUser(user.get());
         playlist.setPlaylistName(createPlaylistRequestDto.getPlaylistName());
         playlist.setBackgroundIdx(createPlaylistRequestDto.getBackgroundIdx());
+        playlist.setType((createPlaylistRequestDto.getType()));
         playlistRepository.save(playlist);
     }
 
