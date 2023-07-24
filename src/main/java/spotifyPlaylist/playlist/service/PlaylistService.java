@@ -158,7 +158,7 @@ public class PlaylistService {
             playlistDto.setPlaylistName(playlist.getPlaylistName());
             playlistDto.setBackgroundIdx(playlist.getBackgroundIdx());
 
-            List<PlaylistSong> playlistSongs = playlistSongRepository.findByPlaylist(playlist);
+            List<PlaylistSong> playlistSongs = playlistSongRepository.findByUser(user);
 
             List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
                 PlaylistSongDto playlistSongDto = new PlaylistSongDto();
@@ -185,6 +185,8 @@ public class PlaylistService {
         return playlistDto;
     }
 
+
+
     public PlaylistDto getPlaylistWithSongsAndStickers(Long playlistId) { // 플레이리스트 곡 조회
         Playlist playlist = playlistRepository.findById(playlistId)
                 .orElseThrow(() -> new IllegalArgumentException("Playlist not found with id: " + playlistId));
@@ -200,7 +202,7 @@ public class PlaylistService {
         List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
             PlaylistSongDto playlistSongDto = new PlaylistSongDto();
             playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
-            playlistSongDto.setTitle(playlistSong.getTitle());
+            playlistSongDto.setTitle(playlistSong.getTitlet());
             playlistSongDto.setArtist(playlistSong.getArtist());
             playlistSongDto.setAlbumImageUrl(playlistSong.getAlbumImageUrl());
 
