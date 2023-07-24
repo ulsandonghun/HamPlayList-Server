@@ -158,18 +158,11 @@ public class PlaylistService {
             playlistSongDto.setAlbumImageUrl(playlistSong.getAlbumImageUrl());
 
             StickerDto stickerDto = new StickerDto();
-            Optional<Sticker> optionalSticker = stickerRepository.findByPlaylistSong(playlistSong);
-            if (optionalSticker.isPresent()) {
-                Sticker sticker = optionalSticker.get();
+            stickerRepository.findByPlaylistSong(playlistSong).ifPresent(sticker -> {
                 stickerDto.setStickerId(sticker.getStickerId());
                 stickerDto.setImgIdx(sticker.getImgIdx());
                 stickerDto.setMessage(sticker.getMessage());
-            } else {
-                // Sticker가 없는 경우 빈 StickerDto를 사용
-                stickerDto.setStickerId(null);
-                stickerDto.setImgIdx(null);
-                stickerDto.setMessage(null);
-            }
+            });
 
             playlistSongDto.setStickers(Collections.singletonList(stickerDto));
             return playlistSongDto;
