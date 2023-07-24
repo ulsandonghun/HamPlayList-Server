@@ -32,7 +32,7 @@ public class SpotifyService {
 
         try {
             SearchTracksRequest searchTrackRequest = spotifyApi.searchTracks(trackname)
-                    .limit(1)
+                    .limit(50)
                     .build();
 
             Paging<Track> searchResult = searchTrackRequest.execute();
@@ -70,7 +70,7 @@ public class SpotifyService {
 
         try {
             SearchTracksRequest searchTrackRequest = spotifyApi.searchTracks("track:" + trackname + " artist:" + Artist )
-                    .limit(10)
+                    .limit(1)
                     .build();
 
             Paging<Track> searchResult = searchTrackRequest.execute();
