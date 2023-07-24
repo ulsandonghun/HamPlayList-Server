@@ -59,15 +59,13 @@ public class PlaylistService {
 
     @Transactional
     public void addSong(AddSongRequestDto addSongRequestDto, Long playlistId, Long userId) { // 페이지에 곡(스티커) 추가
-        List<SearchResponseDto> searchResults = spotifyService.SearchByTracknameAndArtist(addSongRequestDto.getTitle(), addSongRequestDto.getArtistName());
 
-        if (!searchResults.isEmpty()) {
-            SearchResponseDto searchResult = searchResults.get(0);
+
 
             PlaylistSong playlistSong = new PlaylistSong();
-            playlistSong.setTitle(searchResult.getTitle());
-            playlistSong.setArtist(searchResult.getArtistName());
-            playlistSong.setAlbumImageUrl(searchResult.getImageUrl());
+            playlistSong.setTitle(addSongRequestDto.getTitle());
+            playlistSong.setArtist(addSongRequestDto.getArtistName());
+            playlistSong.setAlbumImageUrl(addSongRequestDto.getImageUrl());
 
             Optional<User> user = userRepository.findById(userId);
             user.ifPresent(playlistSong::setUser);
@@ -83,7 +81,7 @@ public class PlaylistService {
             sticker.setMessage(addSongRequestDto.getMessage());
             sticker.setImageUrl(addSongRequestDto.getImageUrl());
             stickerRepository.save(sticker);
-        }
+
     }
     @Transactional
     //노래이름과 가수 함께 검색시, 가수이름이 영어로 스포티파이에 저장될 경우 검색 안됨.
