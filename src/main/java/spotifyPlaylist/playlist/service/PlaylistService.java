@@ -134,6 +134,55 @@ public class PlaylistService {
         userPlaylistResponseDto.setNickname(user.getNickname());
         userPlaylistResponseDto.setPlaylists(playlistInfoDtos);
         return userPlaylistResponseDto;
+
+
+
+
+    }
+
+
+    public PlaylistDto getAllPlaylistWithSongsAndStickers(Long userId) { // 플레이리스트 곡 조회
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        List<Playlist> playlists = playlistRepository.findByUser(user);
+
+        PlaylistDto playlistDto = new PlaylistDto();
+        playlistDto.setUserId(user.getUserId());
+        playlistDto.setNickname(user.getNickname());
+
+        List<PlaylistSongDto> allPlaylistSongs = new ArrayList<>();
+        for (Playlist playlist : playlists) {
+            playlistDto.setPlaylistId(playlist.getPlaylistId());
+            playlistDto.setPlaylistName(playlist.getPlaylistName());
+            playlistDto.setBackgroundIdx(playlist.getBackgroundIdx());
+
+            List<PlaylistSong> playlistSongs = playlistSongRepository.findByPlaylist(playlist);
+
+            List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
+                PlaylistSongDto playlistSongDto = new PlaylistSongDto();
+                playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
+                playlistSongDto.setTitle(playlistSong.getTitle());
+                playlistSongDto.setArtist(playlistSong.getArtist());
+                playlistSongDto.setAlbumImageUrl(playlistSong.getAlbumImageUrl());
+
+                StickerDto stickerDto = new StickerDto();
+                stickerRepository.findByPlaylistSong(playlistSong).ifPresent(sticker -> {
+                    stickerDto.setStickerId(sticker.getStickerId());
+                    stickerDto.setImgIdx(sticker.getImgIdx());
+                    stickerDto.setMessage(sticker.getMessage());
+                });
+
+                playlistSongDto.setStickers(Collections.singletonList(stickerDto));
+                return playlistSongDto;
+            }).collect(Collectors.toList());
+
+            allPlaylistSongs.addAll(playlistSongDtos);
+        }
+
+        playlistDto.setPlaylistSongs(allPlaylistSongs);
+        return playlistDto;
     }
 
     public PlaylistDto getPlaylistWithSongsAndStickers(Long playlistId) { // 플레이리스트 곡 조회

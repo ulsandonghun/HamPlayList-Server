@@ -46,6 +46,12 @@ public class PlaylistController {
         return playlistService.getPlaylistWithSongsAndStickers(playlistId);
     }
 
+    @GetMapping("/playlist/all/{userId}") // 플레이리스트 곡 조회
+    public PlaylistDto getAllPlaylistWithSongsAndStickers(@PathVariable Long userId) {
+        return playlistService.getAllPlaylistWithSongsAndStickers(userId);
+    }
+
+
     @DeleteMapping("/{playlistId}/{playlistSongId}")
     public ResponseEntity<Void> deleteSongFromPlaylist(@PathVariable Long playlistId, @PathVariable Long playlistSongId) {
         playlistService.deleteSongFromPlaylist(playlistId, playlistSongId);
