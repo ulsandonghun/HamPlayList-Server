@@ -202,7 +202,7 @@ public class PlaylistService {
         List<PlaylistSongDto> playlistSongDtos = playlistSongs.stream().map(playlistSong -> {
             PlaylistSongDto playlistSongDto = new PlaylistSongDto();
             playlistSongDto.setPlaylistSongId(playlistSong.getPlaylistSongId());
-            playlistSongDto.setTitle(playlistSong.getTitlet());
+            playlistSongDto.setTitle(playlistSong.getTitle());
             playlistSongDto.setArtist(playlistSong.getArtist());
             playlistSongDto.setAlbumImageUrl(playlistSong.getAlbumImageUrl());
 
