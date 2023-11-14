@@ -19,7 +19,7 @@
 
 ## 📃 Database Schema
 
-<img src="https://github.com/ulsandonghun/HamPlayList-Server/assets/58305106/5867f702-f984-4cf7-9936-59aff620dc9e" width="500" height="600">
+<img src="https://github.com/ulsandonghun/HamPlayList-Server/assets/58305106/5867f702-f984-4cf7-9936-59aff620dc9e" width="600" height="500">
 
 
 
