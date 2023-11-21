@@ -1,5 +1,23 @@
 # 함께만드는 플레이리스트
 
+<table>
+  <tr>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/28f57f9f-5090-43cd-951c-13dfe81446f3" width="300" height="500"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/c1e09c6d-22a1-4651-8761-9b876c2c7206" width="300" height="500"></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/4c31c0a6-727f-49dc-9ed4-967cb3814f44" width="250" height="500"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/8be57ade-a218-4129-b85f-c8450ee073f4" width="250" height="500"></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/30c81316-f38c-4c1c-b623-3821e2ccb34d" width="250" height="500"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/ed88895d-6820-4c76-9fac-4506fa4e83c6" width="250" height="500"></td>
+  </tr>
+</table>
+
+
 
 ## 🎧 About
 - 친한 친구들과 좋아하는 음악을 추천하고 기록 & 추가한 음악을 스티커 형식으로 페이지에 저장 플랫폼
