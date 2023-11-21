@@ -1,19 +1,27 @@
-# 함께만드는 플레이리스트
+# 💚함께만드는 플레이리스트
+### "**함플리**는 ‘커뮤니케이션’과 ‘엔터테인’이라는 두 키워드를 중심으로 구성된 서비스입니다."   
+
+**음악 스티커**라는 개념을 도입하여 음악을 추천하는 활동에 재미를 더하고, **추천메시지** 기능을 통해 짧은 메시지를 전달하며 지인 간의 소통을 이끌어냅니다. 또한 음악 추천 과정이 일종의 다이어리 꾸미기와 유사한 형태를 띄어, **아날로그적인 즐거움**이 더해진 감성을 가지고 있습니다.
+
+## 🎵 메인화면 구성
+<table>
+  <tr>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/28f57f9f-5090-43cd-951c-13dfe81446f3" width="350" height="600"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/c1e09c6d-22a1-4651-8761-9b876c2c7206" width="350" height="600"></td>
+  </tr>
+</table>
+
+## 🎼 플레이리스트 페이지 화면 구성
+
 
 <table>
   <tr>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/28f57f9f-5090-43cd-951c-13dfe81446f3" width="300" height="500"></td>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/c1e09c6d-22a1-4651-8761-9b876c2c7206" width="300" height="500"></td>
-  </tr>
-</table>
-<table>
-  <tr>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/4c31c0a6-727f-49dc-9ed4-967cb3814f44" width="250" height="500"></td>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/8be57ade-a218-4129-b85f-c8450ee073f4" width="250" height="500"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/4c31c0a6-727f-49dc-9ed4-967cb3814f44" width="350" height="600"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/8be57ade-a218-4129-b85f-c8450ee073f4" width="350" height="600"></td>
   </tr>
   <tr>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/30c81316-f38c-4c1c-b623-3821e2ccb34d" width="250" height="500"></td>
-    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/ed88895d-6820-4c76-9fac-4506fa4e83c6" width="250" height="500"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/30c81316-f38c-4c1c-b623-3821e2ccb34d" width="350" height="600"></td>
+    <td><img src="https://github.com/ulsandonghun/ProjectX/assets/58305106/ed88895d-6820-4c76-9fac-4506fa4e83c6" width="350" height="600"></td>
   </tr>
 </table>
 
